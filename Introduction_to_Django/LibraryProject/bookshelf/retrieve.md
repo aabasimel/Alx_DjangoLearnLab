@@ -1,8 +1,17 @@
-# Update
-book.title = "Nineteen Eighty-Four"
-book.save()
 
-# Verify
-book_updated = Book.objects.get(id=book.id)
-book_updated.title
-# Output: 'Nineteen Eighty-Four'
+** `retrieve.md`**
+```markdown
+# Retrieve Operation
+
+## Command:
+```python
+from bookshelf.models import Book
+book = Book.objects.get(title="1984")
+print(f"Title: {book.title}")
+print(f"Author: {book.author}")
+print(f"Publication Year: {book.publication_year}")
+
+# Expected output
+Title: 1984
+Author: George Orwell
+Publication Year: 1949
