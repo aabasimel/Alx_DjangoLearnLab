@@ -36,7 +36,7 @@ def librarian_for_library(library_name):
     """
     try:
         library = Library.objects.get(name=library_name)
-        librarian = library.librarian  # Using OneToOne relationship
+        librarian = Librarian.objects.get(library=library)
         print(f"Librarian for {library_name}: {librarian.name}")
         return librarian
     except Library.DoesNotExist:
