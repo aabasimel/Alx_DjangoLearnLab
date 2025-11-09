@@ -24,8 +24,8 @@ urlpatterns =[
 
 
      # Custom permission secured URLs
-    path('add/', add_book, name='add_book'),
-    path('edit//<int:book_id>/', edit_book, name='edit_book'),
+    path('add_book/', add_book, name='add_book'),
+    path('edit_book//<int:book_id>/', edit_book, name='edit_book'),
     path('books/<int:book_id>/delete/', delete_book, name='delete_book'),
     
 ]
