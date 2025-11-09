@@ -10,6 +10,7 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import user_passes_test, login_required,permission_required
 from .forms import BookForm
+from django.contrib.auth.decorators import permission_required
 
 def is_admin(user):
     return user.is_authenticated and hasattr(user, 'profile') and user.profile.role == 'Admin'
