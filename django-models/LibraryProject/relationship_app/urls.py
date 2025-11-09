@@ -4,7 +4,7 @@ from .views import list_books
 from .views import LibraryDetailView
 from django.contrib.auth.views import LoginView, LogoutView
 
-from .views import admin_view,librarian_view,member_view
+from .views import admin_view,librarian_view,member_view,add_book,edit_book,delete_book
 
 urlpatterns =[
     path ('books',views.list_books, name= 'list_books'),
@@ -22,5 +22,10 @@ urlpatterns =[
     path('librarian/', librarian_view, name='librarian_view'),
     path('member/', member_view, name='member_view'),
 
+
+     # Custom permission secured URLs
+    path('books/add/', add_book, name='add_book'),
+    path('books/<int:book_id>/edit/', edit_book, name='edit_book'),
+    path('books/<int:book_id>/delete/', delete_book, name='delete_book'),
     
 ]
