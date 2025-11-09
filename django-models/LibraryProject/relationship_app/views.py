@@ -3,7 +3,6 @@ from django.http import HttpResponse
 from django.views.generic import DetailView
 from .models import Library, Author,Book
 from django.views.generic.detail import DetailView
-
 def list_books(request):
     """
     Function-based view that lists all books in the database
