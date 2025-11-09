@@ -1,19 +1,71 @@
 from django.shortcuts import render, get_list_or_404,redirect
 from django.http import HttpResponse
 from django.views.generic import DetailView
-from .models import Library, Author,Book
+from .models import Library, Author,Book, UserProfile
+
 from django.views.generic.detail import DetailView
 
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import user_passes_test, login_required
 
+def is_admin(user):
+    return user.is_authenticated and hasattr(user, 'profile') and user.profile.role == 'Admin'
+
+def is_librarian(user):
+    return user.is_authenticated and hasattr(user, 'profile') and user.profile.role == 'Librarian'
+
+def is_member(user):
+    return user.is_authenticated and hasattr(user, 'profile') and user.profile.role == 'Member'
 def list_books(request):
     """
     Function-based view that lists all books in the database
     """
     books = Book.objects.all().select_related('author')
     return render(request, 'relationship_app/list_books.html', {'books': books})
+
+
+
+@user_passes_test(is_admin)
+@login_required
+def admin_view(request):
+    """
+    Admin view - only accessible to users with Admin role
+    """
+    users = UserProfile.objects.all().select_related('user')
+    return render(request, 'relationship_app/admin_view.html', {
+        'users': users,
+        'total_books': Book.objects.count(),
+        'total_libraries': Library.objects.count(),
+        'total_users': UserProfile.objects.count()
+    })
+
+@user_passes_test(is_librarian)
+@login_required
+def librarian_view(request):
+    """
+    Librarian view - only accessible to users with Librarian role
+    """
+    libraries = Library.objects.all().prefetch_related('books')
+    return render(request, 'relationship_app/librarian_view.html', {
+        'libraries': libraries,
+        'total_books': Book.objects.count(),
+        'available_books': Book.objects.filter(libraries__isnull=False).distinct().count()
+    })
+@user_passes_test(is_member)
+@login_required
+def member_view(request):
+    """
+    Member view - only accessible to users with Member role
+    """
+    books = Book.objects.all().select_related('author')
+    libraries = Library.objects.all()
+    return render(request, 'relationship_app/member_view.html', {
+        'books': books,
+        'libraries': libraries,
+        'available_books_count': Book.objects.filter(libraries__isnull=False).distinct().count()
+    })
 
 class LibraryDetailView(DetailView):
     """
