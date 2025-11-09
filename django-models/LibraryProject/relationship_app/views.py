@@ -2,6 +2,7 @@ from django.shortcuts import render, get_list_or_404
 from django.http import HttpResponse
 from django.views.generic import DetailView
 from .models import Library, Author,Book
+from django.views.generic.detail import DetailView
 
 def list_books(request):
     """
