@@ -126,5 +126,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'list_books'
 LOGOUT_REDIRECT_URL = 'login'
-AUTH_USER_MODEL = 'relationship_app.User'
+AUTH_USER_MODEL = 'relationship_app.CustomUser'
 FILE_UPLOAD_PERMISSIONS = 0o644
