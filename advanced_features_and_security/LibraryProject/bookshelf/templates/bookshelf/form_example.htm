@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Form Example</title>
+</head>
+<body>
+    <h1>Example Form</h1>
+    
+    {% if messages %}
+        {% for message in messages %}
+            <div style="color: green;">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        
+        {% if form.errors %}
+            <div style="color: red;">
+                Please correct the errors below.
+            </div>
+        {% endif %}
+
+        <div>
+            <label>Name:</label>
+            {{ form.name }}
+            {% if form.name.errors %}
+                <div style="color: red;">{{ form.name.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div>
+            <label>Email:</label>
+            {{ form.email }}
+            {% if form.email.errors %}
+                <div style="color: red;">{{ form.email.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div>
+            <label>Subject:</label>
+            {{ form.subject }}
+        </div>
+
+        <div>
+            <label>Message:</label>
+            {{ form.message }}
+            {% if form.message.errors %}
+                <div style="color: red;">{{ form.message.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div>
+            <label>Priority:</label>
+            {{ form.priority }}
+        </div>
+
+        <div>
+            {{ form.agree_to_terms }}
+            <label>I agree to the terms and conditions</label>
+            {% if form.agree_to_terms.errors %}
+                <div style="color: red;">{{ form.agree_to_terms.errors }}</div>
+            {% endif %}
+        </div>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <div>
+        <a href="{% url 'bookshelf:home' %}">Back to Home</a>
+    </div>
+</body>
+</html>

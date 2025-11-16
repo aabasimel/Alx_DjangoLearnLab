@@ -12,6 +12,29 @@ from django.urls import reverse
 from django.http import JsonResponse
 from .forms import ExampleForm
 
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .forms import ContactForm
+
+def form_example(request):
+    """
+    Simple form example view
+    """
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            messages.success(request, 'Form submitted successfully!')
+            return redirect('bookshelf:form_example_success')
+    else:
+        form = ContactForm()
+    
+    return render(request, 'bookshelf/form_example.html', {'form': form})
+
+def form_example_success(request):
+    """
+    Success page after form submission
+    """
+    return render(request, 'bookshelf/form_example_success.html')
 class BookListView(LoginRequiredMixin, ListView):
     model = Book
     template_name = 'book_list.html'
