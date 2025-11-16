@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% if form.instance.pk %}Edit Book{% else %}Add Book{% endif %}</title>
+</head>
+<body>
+    <h1>{% if form.instance.pk %}Edit Book{% else %}Add New Book{% endif %}</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        
+        {% if form.errors %}
+            <div style="color: red;">
+                Please correct the errors below.
+            </div>
+        {% endif %}
+
+        <div>
+            <label>Title:</label>
+            {{ form.title }}
+            {% if form.title.errors %}
+                <div style="color: red;">{{ form.title.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div>
+            <label>Author:</label>
+            {{ form.author }}
+            {% if form.author.errors %}
+                <div style="color: red;">{{ form.author.errors }}</div>
+            {% endif %}
+        </div>
+
+        <button type="submit">Save</button>
+    </form>
+
+    <p><a href="{% url 'bookshelf:book_list' %}">Back to Book List</a></p>
+</body>
+</html>
