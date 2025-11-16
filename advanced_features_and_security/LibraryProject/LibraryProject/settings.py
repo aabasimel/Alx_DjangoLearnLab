@@ -154,6 +154,8 @@ CSRF_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SAMESITE = 'Lax' if DEBUG else 'Strict'
 CSRF_COOKIE_SAMESITE = 'Lax' if DEBUG else 'Strict'
 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.Argon2PasswordHasher',
     'django.contrib.auth.hashers.PBKDF2PasswordHasher',
