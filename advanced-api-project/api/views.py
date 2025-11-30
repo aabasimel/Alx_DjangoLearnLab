@@ -9,6 +9,7 @@ from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 class AuthorListCreateView(generics.ListCreateAPIView):
     """
     API endpoint that allows authors to be viewed or created.
