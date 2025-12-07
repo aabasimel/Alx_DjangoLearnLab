@@ -67,21 +67,8 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 
 	def form_valid(self, form):
 		form.instance.author = self.request.user
-		# Let the base class save the instance
-		response = super().form_valid(form)
-		# handle tags if form saved them to _tag_objs when commit=False
-		if hasattr(form, "_tag_objs"):
-			self.object.tags.set(form._tag_objs)
-		else:
-			# attempt to set from cleaned_data
-			tags_str = form.cleaned_data.get("tags", "")
-			if tags_str:
-				tag_names = [t.strip() for t in tags_str.split(",") if t.strip()]
-				from .models import Tag
-
-				tag_objs = [Tag.objects.get_or_create(name=n)[0] for n in tag_names]
-				self.object.tags.set(tag_objs)
-		return response
+		# With taggit the form.save() will handle tags automatically
+		return super().form_valid(form)
 
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
@@ -93,17 +80,7 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 		post = self.get_object()
 		return self.request.user == post.author
     
-	def form_valid(self, form):
-		response = super().form_valid(form)
-		# update tags from form
-		tags_str = form.cleaned_data.get("tags", "")
-		if tags_str is not None:
-			tag_names = [t.strip() for t in tags_str.split(",") if t.strip()]
-			from .models import Tag
-
-			tag_objs = [Tag.objects.get_or_create(name=n)[0] for n in tag_names]
-			self.object.tags.set(tag_objs)
-		return response
+	# No custom form_valid needed for tags when using taggit; base class will save tags
 
 
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
