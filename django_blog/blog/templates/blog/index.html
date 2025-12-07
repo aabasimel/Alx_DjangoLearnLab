@@ -22,6 +22,10 @@
     </header>
     <main>
       <p>This is a placeholder index page for the blog app.</p>
+      <p><a href="{% url 'blog:post_list' %}">View all posts</a></p>
+      {% if user.is_authenticated %}
+        <p><a href="{% url 'blog:post_create' %}">Create a new post</a></p>
+      {% endif %}
     </main>
     <script src="{% static 'blog/script.js' %}"></script>
   </body>
