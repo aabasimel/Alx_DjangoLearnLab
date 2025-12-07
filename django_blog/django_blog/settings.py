@@ -92,16 +92,7 @@ DATABASES = {
 #         "PORT": os.environ.get("DB_PORT", "5432"),
 #     }
 # }
-#
-# To use the PostgreSQL config above set the environment variables, for
-# example (macOS / zsh):
-#
-# export DB_NAME=your_db_name
-# export DB_USER=your_db_user
-# export DB_PASSWORD=your_db_password
-# export DB_HOST=localhost
-# export DB_PORT=5432
-#
+
 
 
 
@@ -148,3 +139,8 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Authentication redirects
+# Use the namespaced view name so redirects resolve correctly
+LOGIN_REDIRECT_URL = "blog:index"
+LOGOUT_REDIRECT_URL = "blog:index"
