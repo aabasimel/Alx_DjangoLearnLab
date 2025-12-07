@@ -143,6 +143,6 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Authentication redirects
-# Use the namespaced view name so redirects resolve correctly
+
 LOGIN_REDIRECT_URL = "blog:index"
 LOGOUT_REDIRECT_URL = "blog:index"
